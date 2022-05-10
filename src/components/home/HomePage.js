@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { picons } from '../users/userIcons'
 import ax from '../../ax'
-import { ComposedChart, XAxis, YAxis, Line, Bar, BarChart, Area, CartesianGrid, Tooltip, Legend, RadialBarChart, RadialBar } from "recharts"
+import { XAxis, YAxis, Bar, BarChart, CartesianGrid, Tooltip, Legend } from "recharts"
 import date from 'date-and-time';
+import HomeCard from '../shared/HomeCard';
+import { CgUserList } from 'react-icons/cg'
+import { FcElectricity } from 'react-icons/fc'
+import { GiElectricalResistance } from 'react-icons/gi'
+import { FiUserCheck } from 'react-icons/fi'
+import { MdPriceCheck, MdPriceChange } from 'react-icons/md'
+import GoogleMapReact from 'google-map-react';
+import screen from "../../screen"
 
 const HomePage = () => {
+  const [width] = screen()
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
   const [devices, setDevices] = useState([])
@@ -58,15 +66,11 @@ const HomePage = () => {
     })
     return { dayFils, weekFils, monthFils, balanceFillsDay, balanceFillsMonth, balanceForGrafMonth }
   }
-
-  // const filteredUsers = users.filter((user) => user.site === userSite).length
-  // const filteredDevice = devices.filter((device) => device.site === userSite).length
   const formatingDate = (nx) => {
     const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
     const formatDate = date.format(date.addMonths(tarih, -nx), 'YYYY-MM-DD').split("-")[1]
     return months[formatDate - 1]
   }
-  console.log(userFillsDate(0).balanceForGrafMonth)
   const data = [
     {
       "name": formatingDate(6),
@@ -99,44 +103,38 @@ const HomePage = () => {
   ]
   return (
     <div className=''>
-      <div className='d-flex justify-content-evenly mb-4 '>
-        <div className='d-flex flex-column align-items-center' style={{}}>
-          <label className=' text-capitalize pb-1 px-2 mb-3' style={{ fontSize: 15 }}>Kullanılabilir Cihaz Miktarı</label>
-          <label>{deviceState}</label>
-        </div>
-        <div className='d-flex flex-column align-items-center' style={{ fontSize: 15 }}>
-          <label className='text-capitalize pb-1 px-2 mb-3' style={{ fontSize: 15 }}>Toplam Cihaz</label>
-          <label>{deviceCount}</label>
-        </div>
+      <div className='row row-cols-1 row-cols-ms-2 row-cols-md-3 row-cols-lg-4 justify-content-center mb-4 mx-auto' >
+        <HomeCard header="Kullanılabilir Cihaz Miktarı" data={deviceState} bgColor="#535c68" icon={<FcElectricity size={40} color="#40c8b9"/>} />
+        <HomeCard header="Toplam Cihaz" data={deviceCount} bgColor="#F08A5D" icon={<GiElectricalResistance size={40} color="#40c8b9" />} />
+        <HomeCard header="Toplam Kullanıcı" data={userCount} bgColor="#badc58" icon={<CgUserList size={40} color="#40c8b9" />} />
+        <HomeCard header="Işlem yapan Kullanıcı" data={userCount - userFillsDate().dayFils.length} bgColor="#B83B5E" icon={<FiUserCheck size={40} color="#40c8b9" />} />
+        <HomeCard header="Bugün toplam gelir" data={userFillsDate().balanceFillsDay.toFixed(1)} bgColor="#6A2C70" icon={<MdPriceCheck size={40} color="#40c8b9" />} />
+        <HomeCard header="Aylık toplam gelir" data={userFillsDate().balanceFillsMonth.toFixed(1)} bgColor="#686de0" icon={<MdPriceChange size={40} color="#40c8b9" />} />
+
+
       </div>
-      <div className='d-flex justify-content-center'>
-        <BarChart width={730} height={250} data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
+      <hr className='w-75 mx-auto' />
+      <div className='d-flex justify-content-center me-2 py-4 mb-4' >
+        <div className='px-2 rounded d-flex justify-content-center py-4' style={{backgroundColor:"rgba(223, 249, 251,1.0)"}}>
+        <BarChart width={width > 700 ? 730 : width - 50} height={250} data={data}>
+          <CartesianGrid strokeDasharray="1 1" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="Aylık" fill="#8884d8" />
-          {/* <Bar dataKey="Haftalık" fill="#82ca9d" /> */}
+          <Bar dataKey="Aylık" fill="#686de0" />
         </BarChart>
-        <div className='d-flex flex-column p-4'>
-          <div className='mb-3'>
-            <label className='fs-6'>Toplam Kullanıcı </label>
-            : <label className='fs-5'>  {userCount}</label>
-          </div>
-          <div className='mb-3'>
-            <label className='fs-6'>Bugün işlem yapan kullanıcı sayısı</label>
-            : <label className='fs-5'>  {userCount - userFillsDate().dayFils.length}</label>
-          </div>
-          <div className='mb-3'>
-            <label className='fs-6'>Bugün yapılan toplam ücret</label>
-            : <label className='fs-5'>  {userFillsDate().balanceFillsDay.toFixed(1)}</label>
-          </div>
-          <div className='mb-3'>
-            <label className='fs-6'>Bu ay yapılan toplam ücret</label>
-            : <label className='fs-5'>  {userFillsDate().balanceFillsMonth.toFixed(1)}</label>
-          </div>
         </div>
+      </div>
+      <hr className='w-75 mx-auto' />
+      <div className='mx-auto' style={{ height: '100vh', width: '100%',marginTop:45 }}>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: "AIzaSyAUZNQsQHfbl0bB47lQUXvnYUyj9WF0jDU" }}
+          defaultCenter={{ lat: 41.015137, lng: 28.979530 }}
+          defaultZoom={14}
+        >
+
+        </GoogleMapReact>
       </div>
     </div>
   )

@@ -72,7 +72,7 @@ const Devices = (props) => {
     </div>
   )
   return (
-    <div className=''>
+    <div className='container'>
       <div className='text-center fs-3 '>Cihazlar</div>
       {renderDevices()}
     </div>

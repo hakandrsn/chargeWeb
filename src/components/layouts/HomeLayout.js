@@ -14,10 +14,12 @@ import ResetPassword from '../settings/ResetPassword'
 import Profil from '../settings/Profil'
 import NewUser from '../users/NewUser'
 import UserUpdate from '../users/UserUpdate'
+import AboutUs from '../aboutus/AboutUs'
+import Contact from '../contact/Contact'
 
 const HomeLayout = () => {
     return (
-        <div className='container'>
+        <div className='container-fluid'>
             <Router history={history}>
                 <Header />
                 <Switch>
@@ -31,6 +33,11 @@ const HomeLayout = () => {
                     <Route exact path="/device/:id" component={DevicesDetail} />
                     <Route exact path="/reset/:id" component={ResetPassword} />
                     <Route exact path="/profil/:id" component={Profil} />
+
+                    <Route exact path="/aboutus" component={AboutUs} />
+                    <Route exact path="/contact" component={Contact} />
+
+
                 </Switch>
             </Router>
         </div>

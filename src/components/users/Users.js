@@ -85,7 +85,7 @@ const Users = (props) => {
     </div>
   )
   return (
-    <div className=''>
+    <div className='container'>
       <div className='d-flex justify-content-center align-items-center'>
         <Link
           to={`/users/newuser`}

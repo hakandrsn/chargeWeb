@@ -2,17 +2,23 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
 }
-html,body {
+
+html,
+body {
     margin: 0;
     height: "100%";
-    height:"100%";
-
+    height: "100%";
 }
+
 header {
     grid-template-columns: 2fr 1fr;
 }
+
 .vertical-t {
-    width:1px;
+    width: 1px;
     word-wrap: break-word;
-    white-space:pre-wrap; 
+    white-space: pre-wrap;
+}
+.home-card:hover {
+    background-color: black;
 }
