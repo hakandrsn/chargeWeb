@@ -37,6 +37,7 @@ const Contact = ({className}) => {
           </DropdownItem>    
            <DropdownItem
           event={'https://www.mar-sis.com/'}
+          content=""
           icon={<img src={ws} alt="website" width={45} />}
           >
             Website
