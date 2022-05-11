@@ -140,7 +140,7 @@ const HomePage = () => {
           bootstrapURLKeys={{ key: "AIzaSyAUZNQsQHfbl0bB47lQUXvnYUyj9WF0jDU" }}
           defaultCenter={{ lat: 41.05571165402418, lng: 29.04609112693213 }}
           defaultZoom={15}
-        >
+        >df
           {
             devices && devices.map((device, i) => {
               const ll = device.location.split(",")
