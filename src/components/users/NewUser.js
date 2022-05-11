@@ -35,7 +35,7 @@ const NewUser = () => {
     }
 
     return (
-        <div>
+        <div className='container'>
             <button className='d-block border-0 px-4 py-1 rounded' style={{ backgroundColor: "#ff9911" }} onClick={() => history.goBack()}>Geri</button>
             <label className='d-block text-center fs-4' style={{}}>Kullanıcı Ekle</label>
             <UserForm onSubmit={onSubmit} />

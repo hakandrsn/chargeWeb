@@ -1,0 +1,30 @@
+.dropdown {
+    position:absolute;
+    top: 58px;
+    transform: translateX(-40%);
+    background-color: #353B48;
+    border: 1px solid #353B48;
+    border-radius: 5px;
+    padding: 1rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+}
+@media screen and (max-width: 650px) {
+    .dropdown {
+        transform: translateX(-60%);
+    }
+}
+.menu-item {
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transition: background 0.2s;
+    flex-direction: column;
+}
+.header-contact {
+    cursor: pointer;
+
+}

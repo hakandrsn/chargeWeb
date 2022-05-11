@@ -19,7 +19,7 @@ import Contact from '../contact/Contact'
 
 const HomeLayout = () => {
     return (
-        <div className='container-fluid'>
+        <div className='container-fluid m-0 p-0'>
             <Router history={history}>
                 <Header />
                 <Switch>

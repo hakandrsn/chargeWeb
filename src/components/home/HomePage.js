@@ -22,7 +22,8 @@ const HomePage = () => {
     (async () => {
       setLoading(true)
       await ax.get(`/users`).then(res => {
-        setUsers(res.data)
+        const filteredUsers = res.data.filter((user) => user.site === userSite)
+        setUsers(filteredUsers)
       }).finally(() => {
         setLoading(false)
       })
@@ -33,6 +34,7 @@ const HomePage = () => {
       })
     })()
   }, [])
+  console.log(users)
   const deviceCount = devices && devices.length
   const deviceState = devices && devices.filter(d => d.state === "1").length
   const userCount = users && users.length
@@ -101,39 +103,53 @@ const HomePage = () => {
       "Aylık": userFillsDate(0).balanceForGrafMonth,
     }
   ]
+  const Marker = ({ text }) => {
+    <div>nabersin {text}</div>
+  }
   return (
     <div className=''>
+      <div className='text-center fs-3 mb-3 fst-italic fw-bolder' style={{ color: "#353B48" }}>Özet</div>
       <div className='row row-cols-1 row-cols-ms-2 row-cols-md-3 row-cols-lg-4 justify-content-center mb-4 mx-auto' >
-        <HomeCard header="Kullanılabilir Cihaz Miktarı" data={deviceState} bgColor="#535c68" icon={<FcElectricity size={40} color="#40c8b9"/>} />
-        <HomeCard header="Toplam Cihaz" data={deviceCount} bgColor="#F08A5D" icon={<GiElectricalResistance size={40} color="#40c8b9" />} />
-        <HomeCard header="Toplam Kullanıcı" data={userCount} bgColor="#badc58" icon={<CgUserList size={40} color="#40c8b9" />} />
-        <HomeCard header="Işlem yapan Kullanıcı" data={userCount - userFillsDate().dayFils.length} bgColor="#B83B5E" icon={<FiUserCheck size={40} color="#40c8b9" />} />
+        <HomeCard header="Meşgul cihaz" data={deviceState} bgColor="#535c68" icon={<FcElectricity size={40} color="#40c8b9" />} />
+        <HomeCard header="Toplam cihaz" data={deviceCount} bgColor="#F08A5D" icon={<GiElectricalResistance size={40} color="#40c8b9" />} />
+        <HomeCard header="Toplam kullanıcı" data={userCount} bgColor="#badc58" icon={<CgUserList size={40} color="#40c8b9" />} />
+        <HomeCard header="Işlem yapan kullanıcı" data={userCount - userFillsDate().dayFils.length} bgColor="#B83B5E" icon={<FiUserCheck size={40} color="#40c8b9" />} />
         <HomeCard header="Bugün toplam gelir" data={userFillsDate().balanceFillsDay.toFixed(1)} bgColor="#6A2C70" icon={<MdPriceCheck size={40} color="#40c8b9" />} />
         <HomeCard header="Aylık toplam gelir" data={userFillsDate().balanceFillsMonth.toFixed(1)} bgColor="#686de0" icon={<MdPriceChange size={40} color="#40c8b9" />} />
 
 
       </div>
       <hr className='w-75 mx-auto' />
+      <div className='text-center fs-3 mb-3 fst-italic fw-bolder' style={{ color: "#353B48" }}>Aylık Tablo</div>
       <div className='d-flex justify-content-center me-2 py-4 mb-4' >
-        <div className='px-2 rounded d-flex justify-content-center py-4' style={{backgroundColor:"rgba(223, 249, 251,1.0)"}}>
-        <BarChart width={width > 700 ? 730 : width - 50} height={250} data={data}>
-          <CartesianGrid strokeDasharray="1 1" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Aylık" fill="#686de0" />
-        </BarChart>
+        <div className='px-2 rounded d-flex justify-content-center py-4' style={{ backgroundColor: "rgba(223, 249, 251,1.0)" }}>
+          <BarChart width={width > 700 ? 730 : width - 50} height={250} data={data}>
+            <CartesianGrid strokeDasharray="1 1" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="Aylık" fill="#686de0" />
+          </BarChart>
         </div>
       </div>
       <hr className='w-75 mx-auto' />
-      <div className='mx-auto' style={{ height: '100vh', width: '100%',marginTop:45 }}>
+      <div className='text-center fs-3 mb-3 fst-italic fw-bolder' style={{ color: "#353B48" }}>Cihaz Konumları</div>
+      <div className='mx-auto' style={{ height: '100vh', width: '100%', marginTop: 45 }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyAUZNQsQHfbl0bB47lQUXvnYUyj9WF0jDU" }}
-          defaultCenter={{ lat: 41.015137, lng: 28.979530 }}
-          defaultZoom={14}
+          defaultCenter={{ lat: 41.05571165402418, lng: 29.04609112693213 }}
+          defaultZoom={15}
         >
-
+          {
+            devices && devices.map((device, i) => {
+              const ll = device.location.split(",")
+              console.log(Number(ll[0]), Number(ll[1]))
+              return (
+                <Marker key={i} lat={parseInt(ll[0])} lng={parseInt(ll[1])} text="hakan" />
+              )
+            })
+          }
         </GoogleMapReact>
       </div>
     </div>
