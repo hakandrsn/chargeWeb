@@ -10,7 +10,6 @@ import linkedin from "../../assets/contactIcons/linkedin.svg"
 
 
 const Contact = ({className}) => {
-  const [open, setOpen] = React.useState(false)
   const DropdownItem =({icon,children,event,content})=>{
     return(
       <a href={`${event}${content}`} target="_blank" className='menu-item text-decoration-none px-3 py-1'>
@@ -54,7 +53,7 @@ const Contact = ({className}) => {
           content={`https://www.linkedin.com/company/marsis-bilisim/?originalSubdomain=tr`}
           icon={<img src={linkedin} alt="linkedin" width={45} />}
           >
-            Whatssapp
+            Linkedin
           </DropdownItem>
         </div>
   )

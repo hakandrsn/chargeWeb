@@ -137,10 +137,10 @@ const HomePage = () => {
       <div className='text-center fs-3 mb-3 fst-italic fw-bolder' style={{ color: "#353B48" }}>Cihaz Konumları</div>
       <div className='mx-auto' style={{ height: '100vh', width: '100%', marginTop: 45 }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyAUZNQsQHfbl0bB47lQUXvnYUyj9WF0jDU" }}
-          defaultCenter={{ lat: 41.05571165402418, lng: 29.04609112693213 }}
-          defaultZoom={15}
-        >df
+               bootstrapURLKeys={{ key: "AIzaSyBPeeSwsoJ6yA5A_PFz51wrQd4SVLcJdDU" }}
+               defaultCenter={{ lat: 39.19985299873145, lng:  33.53684485914165 }}
+               defaultZoom={7}
+        >
           {
             devices && devices.map((device, i) => {
               const ll = device.location.split(",")
